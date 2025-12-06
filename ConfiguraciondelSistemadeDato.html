@@ -1,0 +1,120 @@
+﻿
+
+<html>
+	
+<head>
+	<title>Configuraci&oacute;n del Sistema de Dato</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 10.1.0.147">
+	<meta name="description" content="" /> 
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "brushh.html?" + sTopicUrl;
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("ConfiguraciondelSistemadeDato");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+</head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Configuraci&oacute;n del Sistema de Dato</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="ConfiguraciondelSistema.html">Configuraci&oacute;n del Sistema</a> &rsaquo;&rsaquo; 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="ConfiguraciondelSistema.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				
+				
+				<a href="ConfiguraciondeRutasyNavegacion.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				
+				
+				<a href="ConfiguraciondelPerfildelUsuario.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p class="rvps4"><span class="rvts6">Todos los datos se guardan en </span><span class="rvts11">LocalStorage</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts14">Usuario actual</span></span></h3>
+<p class="rvps10"><span class="rvts17">localStorage.setItem("usuarioActual", JSON.stringify(usuario));</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts14">Lista de obras</span></span></h3>
+<p class="rvps10"><span class="rvts17">localStorage.setItem("obras", JSON.stringify(obras));</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts14">Comentarios</span></span></h3>
+<p class="rvps4"><span class="rvts6">Integrados dentro del objeto de cada obra.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts14">Likes</span></span></h3>
+<p class="rvps4"><span class="rvts6">Guardados por nombre de usuario dentro del arreglo </span><span class="rvts15">likes</span><span class="rvts6"></span></p>
+<p class="rvps5" style="clear: both;"><span class="rvts12">Creado con el Personal Edition de HelpNDoc: </span><a class="rvts13" href="https://www.helpauthoringsoftware.com">Noticias e información sobre software y herramientas de creación de documentación de ayuda</a></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;BRUSH&gt; by &lt;Equipo 4&gt;. All Rights Reserved.
+			</div>
+		</div>
+	
+	
+
+	
+</body>
+	
+</html>
+

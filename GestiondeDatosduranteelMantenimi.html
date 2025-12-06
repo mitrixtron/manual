@@ -1,0 +1,120 @@
+﻿
+
+<html>
+	
+<head>
+	<title>Gesti&oacute;n de Datos durante el Mantenimiento</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 10.1.0.147">
+	<meta name="description" content="" /> 
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "brushh.html?" + sTopicUrl;
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("GestiondeDatosduranteelMantenimi");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+</head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Gesti&oacute;n de Datos durante el Mantenimiento</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="Mantenimiento.html">Mantenimiento</a> &rsaquo;&rsaquo; 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="Mantenimiento.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				
+				
+				<a href="MantenimientoPerfectivo.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				
+				
+				<a href="Copiasdeseguridadyrecuperacion.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p class="rvps4"><span class="rvts6">Como BRUSH usa LocalStorage, se debe tener cuidado al:</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts14">✔ Limpiar datos</span></span></h3>
+<p class="rvps4"><span class="rvts6">Solo borrar LocalStorage cuando sea necesario:</span></p>
+<p class="rvps10"><span class="rvts17">localStorage.clear();</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts14">✔ Prevenir saturación</span></span></h3>
+<p class="rvps4"><span class="rvts6">Las imágenes guardadas en Base64 pueden ocupar más espacio del previsto.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts14">✔ Hacer respaldos</span></span></h3>
+<p class="rvps4"><span class="rvts6">Exportar manualmente los datos antes de actualizaciones grandes:</span></p>
+<p class="rvps10"><span class="rvts17">JSON.stringify(localStorage.getItem("obras"))</span><span class="rvts21"></span></p>
+<p class="rvps5" style="clear: both;"><span class="rvts12">Creado con el Personal Edition de HelpNDoc: </span><a class="rvts13" href="https://www.helpndoc.com/es/descubrir-funciones/">Crear fácilmente documentos de ayuda</a></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;BRUSH&gt; by &lt;Equipo 4&gt;. All Rights Reserved.
+			</div>
+		</div>
+	
+	
+
+	
+</body>
+	
+</html>
+

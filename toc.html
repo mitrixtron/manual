@@ -1,0 +1,860 @@
+﻿
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>Manuab - Table of Contents</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 10.1.0.147">
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#tabs .ui-widget-header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.dynatree.min.js"></script>
+	<script type="text/javascript" src="js/hndjsse.js"></script>
+	<script type="text/javascript">
+	
+		window.bSearchDataLoaded = false;
+		var sHelpIdToActivate = '';
+	
+		$(document).ready(function()
+		{
+			var sAnchorName = '';
+			try { sAnchorName = top.location.href.substring(top.location.href.lastIndexOf("#") + 1, top.location.href.length); }
+			catch(err) { sAnchorName = ''; }
+			var nSelectedTab = 0;
+			if (sAnchorName == '_index') nSelectedTab = 1
+			else if (sAnchorName == '_search') nSelectedTab = 2;			
+			$("#tabs").tabs({
+				selected: nSelectedTab,
+				select: function(event, ui) { HideKwPopup(); }
+			});
+			
+			// Toc
+			if ($("#tab-toc").length) {
+				$("#tab-toc").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#tab-keywords").length && $("#tab-keywords").dynatree && $("#tab-keywords").dynatree("getTree") && $("#tab-keywords").dynatree("getTree").activateKey)
+							$("#tab-keywords").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							window.open(node.data.href, node.data.target);
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-toc").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+					
+				// Select the active help id
+				if (sHelpIdToActivate != '') $("#tab-toc").dynatree("getTree").activateKey(sHelpIdToActivate);
+			}
+			
+			// Keywords
+			
+			if ($("#tab-keywords").length) {
+				$("#tab-keywords").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onClick: function(node, event){
+						HideKwPopup();
+						if (node.data && node.data.click)
+						{
+							var aRefList = null;
+							eval('aRefList=' + node.data.click);
+							if (ShowKwPopup(node.li, aRefList))
+							{
+								if ($("#tab-toc") && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").activateKey)
+									$("#tab-toc").dynatree("getTree").activateKey(null);
+								if(node.data.href && node.data.href != '#'){
+									window.open(node.data.href, node.data.target);
+								}
+							}
+						}
+					}
+				});
+				// Expand all nodes if required
+				
+					$("#tab-keywords").dynatree("getRoot").visit(function(node){
+						node.expand(true);
+					});
+				
+			}
+			
+			// Load search data
+			(function() {
+				var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+				se.src = 'js/hndsd.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+			})();
+		});
+		
+		$('body').click(function() {
+			HideKwPopup();
+		});
+		
+		function SelectTocItem(sHelpId)
+		{
+			if ($("#tab-toc").length && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").getNodeByKey) {
+				var aNode = $("#tab-toc").dynatree("getTree").getNodeByKey(sHelpId);
+				if (aNode) {
+					aNode.activateSilently();  
+				}
+			}
+			else {
+				sHelpIdToActivate = sHelpId;
+			}
+		}
+		
+		function HideKwPopup()
+		{
+			if($("#popupMenu")) $("#popupMenu").remove();
+		}
+		
+		function ShowKwPopup(oSender, aLinks)
+		{
+			HideKwPopup();
+			if (!aLinks || !aLinks.length || aLinks.length == 0) return false
+			else if (aLinks.length == 1) return true
+			else
+			{
+				var oParentDiv = document.createElement("DIV");
+				oParentDiv.id = "popupMenu";
+				var oLink = null;
+				// Close button
+				oLink = document.createElement("SPAN");
+				oLink.className = "close-button";
+				oLink.innerHTML = "X";
+				oLink.href = "#";
+				oLink.onclick = HideKwPopup;
+				oParentDiv.appendChild(oLink);
+				// Items
+				for (var nCnt=0; nCnt<aLinks.length; nCnt++)
+				{
+					oLink = document.createElement("A");
+					oLink.innerHTML = aLinks[nCnt][0];
+					oLink.href = aLinks[nCnt][1];
+					oLink.target = "FrameMain";
+					oLink.onclick = HideKwPopup;
+					oParentDiv.appendChild(oLink);
+				}
+				document.body.appendChild(oParentDiv);
+				var pos = $(oSender).offset(); 
+				var height = $(oSender).height();
+				$(oParentDiv).css({
+					"left": (pos.left+20) + "px",
+					"top": (pos.top + height + 5) + "px"
+				});
+				$(oParentDiv).show();
+				return false;
+			}
+		}
+		
+		function PerformSearch()
+		{
+			if (!window.bSearchDataLoaded) {
+				$("#search_results").html("Search engine data hasn't been fully loaded yet or an error occurred while loading it. This usually happens when documentation is browsed locally.");
+				return;
+			}
+			sValue = $("#search_value").val();
+			$("#search_results").html('Searching...');
+			var oSearchEngine = new HndJsSe;
+			oSearchEngine.ParseInput(sValue);			
+			oSearchEngine.PerformSearch();
+			if (!oSearchEngine.aResults || !oSearchEngine.aResults.length)
+			{
+				$("#search_results").html('No results found.');
+			}
+			else
+			{
+				$("#search_results").html('<div id="search_results_content"></div>');
+				var oUl = $("#search_results_content").append("<ul id='lr'></ul>").find("ul");
+				for (var nCnt = 0; nCnt < oSearchEngine.aResults.length; nCnt++)
+				{
+					if (oSearchEngine.aResults[nCnt][0] < aTl.length)
+					{
+						oUl.append("<li><a href='" + aTl[oSearchEngine.aResults[nCnt][0]][0] + "?search=" + escape(sValue) + "' target='FrameMain'>" + unescape(aTl[oSearchEngine.aResults[nCnt][0]][1]) + "</a></li>");
+					}
+				}
+				// Tree
+				$("#search_results_content").dynatree({
+					clickFolderMode: 1,
+					debugLevel: 0,
+					imagePath: 'css/dynatree/chm/',
+					onActivate: function(node){
+						if ($("#search_results_content") && $("#search_results_content").dynatree && $("#search_results_content").dynatree("getTree") && $("#search_results_content").dynatree("getTree").activateKey)
+							$("#search_results_content").dynatree("getTree").activateKey(null);
+						if(node.data.href && node.data.href != '#'){
+							window.open(node.data.href, node.data.target);
+						}
+					}
+				});
+			}
+		}
+	</script>
+</head>
+
+<body>
+
+	<div id="tabs">
+		<ul>
+			
+				<li><a href="#tab-toc">Contents</a></li>
+			
+				<li><a href="#tab-keywords">Index</a></li>
+			
+				<li><a href="#tab-search">Search</a></li>
+			
+		</ul>
+		
+		<div id="tab-toc">
+			<ul id="toc" class="">
+
+				
+
+						<li class="folder" id="Introduccion" data="">
+							<a
+							href="Introduccion.html"
+							target="FrameMain">
+								Introducci&oacute;n
+							</a>
+
+				<ul>
+
+						<li class="" id="Descripciongeneraldelsoftware" data="">
+							<a
+							href="Descripciongeneraldelsoftware.html"
+							target="FrameMain">
+								Descripci&oacute;n general del software
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="AlcancedelSistema" data="">
+							<a
+							href="AlcancedelSistema.html"
+							target="FrameMain">
+								Alcance del Sistema
+							</a>
+
+				<ul>
+
+						<li class="" id="FuncionalidadesIncluidas" data="">
+							<a
+							href="FuncionalidadesIncluidas.html"
+							target="FrameMain">
+								Funcionalidades Incluidas
+							</a>
+
+				</li>
+
+						<li class="" id="LimitesdelSistemaFueradeAlcance" data="">
+							<a
+							href="LimitesdelSistemaFueradeAlcance.html"
+							target="FrameMain">
+								L&iacute;mites del Sistema (Fuera de Alcance)
+							</a>
+
+				</li>
+
+						<li class="" id="PublicoObjetivo" data="">
+							<a
+							href="PublicoObjetivo.html"
+							target="FrameMain">
+								P&uacute;blico Objetivo
+							</a>
+
+				</li>
+
+						<li class="" id="UsoPrevisto" data="">
+							<a
+							href="UsoPrevisto.html"
+							target="FrameMain">
+								Uso Previsto
+							</a>
+
+				</li>
+
+						<li class="" id="ObjetivodelSistema" data="">
+							<a
+							href="ObjetivodelSistema.html"
+							target="FrameMain">
+								Objetivo del Sistema
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="ArquitecturadelSistema" data="">
+							<a
+							href="ArquitecturadelSistema.html"
+							target="FrameMain">
+								Arquitectura del Sistema
+							</a>
+
+				<ul>
+
+						<li class="folder" id="ArquitecturaGeneral" data="">
+							<a
+							href="ArquitecturaGeneral.html"
+							target="FrameMain">
+								Arquitectura General
+							</a>
+
+				<ul>
+
+						<li class="" id="HTML5" data="">
+							<a
+							href="HTML5.html"
+							target="FrameMain">
+								HTML5
+							</a>
+
+				</li>
+
+						<li class="" id="TailwindCSS" data="">
+							<a
+							href="TailwindCSS.html"
+							target="FrameMain">
+								TailwindCSS
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="CapadePresentacionFrontendUI" data="">
+							<a
+							href="CapadePresentacionFrontendUI.html"
+							target="FrameMain">
+								Capa de Presentaci&oacute;n (Frontend / UI)
+							</a>
+
+				<ul>
+
+						<li class="" id="Autenticacion" data="">
+							<a
+							href="Autenticacion.html"
+							target="FrameMain">
+								Autenticaci&oacute;n
+							</a>
+
+				</li>
+
+						<li class="" id="Feed" data="">
+							<a
+							href="Feed.html"
+							target="FrameMain">
+								Feed
+							</a>
+
+				</li>
+
+						<li class="" id="Perfil" data="">
+							<a
+							href="Perfil.html"
+							target="FrameMain">
+								Perfil
+							</a>
+
+				</li>
+
+						<li class="" id="Ventanasmodales" data="">
+							<a
+							href="Ventanasmodales.html"
+							target="FrameMain">
+								Ventanas modales
+							</a>
+
+				</li></ul></li></ul></li>
+
+						<li class="folder" id="TecnologiasUtilizadas" data="">
+							<a
+							href="TecnologiasUtilizadas.html"
+							target="FrameMain">
+								Tecnolog&iacute;as Utilizadas
+							</a>
+
+				<ul>
+
+						<li class="" id="HTML6" data="">
+							<a
+							href="HTML6.html"
+							target="FrameMain">
+								HTML5
+							</a>
+
+				</li>
+
+						<li class="" id="TailwindCSS1" data="">
+							<a
+							href="TailwindCSS1.html"
+							target="FrameMain">
+								TailwindCSS
+							</a>
+
+				</li>
+
+						<li class="" id="HerramientasAdicionales" data="">
+							<a
+							href="HerramientasAdicionales.html"
+							target="FrameMain">
+								Herramientas Adicionales
+							</a>
+
+				</li>
+
+						<li class="" id="Razondetrasdelaselecciontecnolog" data="">
+							<a
+							href="Razondetrasdelaselecciontecnolog.html"
+							target="FrameMain">
+								Raz&oacute;n detr&aacute;s de la selecci&oacute;n tecnol&oacute;gica
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="RequerimientosTecnicos" data="">
+							<a
+							href="RequerimientosTecnicos.html"
+							target="FrameMain">
+								Requerimientos T&eacute;cnicos
+							</a>
+
+				<ul>
+
+						<li class="" id="RequerimientosdeHardware" data="">
+							<a
+							href="RequerimientosdeHardware.html"
+							target="FrameMain">
+								Requerimientos de Hardware
+							</a>
+
+				</li>
+
+						<li class="" id="RequerimientosdeSoftware" data="">
+							<a
+							href="RequerimientosdeSoftware.html"
+							target="FrameMain">
+								Requerimientos de Software
+							</a>
+
+				</li>
+
+						<li class="" id="RequerimientosdeAlmacenamientode" data="">
+							<a
+							href="RequerimientosdeAlmacenamientode.html"
+							target="FrameMain">
+								Requerimientos de Almacenamiento de Datos
+							</a>
+
+				</li>
+
+						<li class="" id="RequerimientosparaelMantenimient" data="">
+							<a
+							href="RequerimientosparaelMantenimient.html"
+							target="FrameMain">
+								Requerimientos para el Mantenimiento
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="InstalaciondelSistema" data="">
+							<a
+							href="InstalaciondelSistema.html"
+							target="FrameMain">
+								Instalaci&oacute;n del Sistema
+							</a>
+
+				<ul>
+
+						<li class="" id="DescargadelProyecto" data="">
+							<a
+							href="DescargadelProyecto.html"
+							target="FrameMain">
+								Descarga del Proyecto
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="ConfiguraciondelSistema" data="">
+							<a
+							href="ConfiguraciondelSistema.html"
+							target="FrameMain">
+								Configuraci&oacute;n del Sistema
+							</a>
+
+				<ul>
+
+						<li class="" id="ConfiguracionVisual" data="">
+							<a
+							href="ConfiguracionVisual.html"
+							target="FrameMain">
+								Configuraci&oacute;n Visual
+							</a>
+
+				</li>
+
+						<li class="" id="ConfiguraciondelLogo" data="">
+							<a
+							href="ConfiguraciondelLogo.html"
+							target="FrameMain">
+								Configuraci&oacute;n del Logo
+							</a>
+
+				</li>
+
+						<li class="" id="ConfiguraciondeRutasyNavegacion" data="">
+							<a
+							href="ConfiguraciondeRutasyNavegacion.html"
+							target="FrameMain">
+								Configuraci&oacute;n de Rutas y Navegaci&oacute;n
+							</a>
+
+				</li>
+
+						<li class="" id="ConfiguraciondelSistemadeDato" data="">
+							<a
+							href="ConfiguraciondelSistemadeDato.html"
+							target="FrameMain">
+								Configuraci&oacute;n del Sistema de Dato
+							</a>
+
+				</li>
+
+						<li class="" id="ConfiguraciondelPerfildelUsuario" data="">
+							<a
+							href="ConfiguraciondelPerfildelUsuario.html"
+							target="FrameMain">
+								Configuraci&oacute;n del Perfil del Usuario
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="EstructuradelCodigo" data="">
+							<a
+							href="EstructuradelCodigo.html"
+							target="FrameMain">
+								Estructura del C&oacute;digo
+							</a>
+
+				<ul>
+
+						<li class="" id="SeccionesInternasdelArchivoHTML" data="">
+							<a
+							href="SeccionesInternasdelArchivoHTML.html"
+							target="FrameMain">
+								Secciones Internas del Archivo HTML
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="Mantenimiento" data="">
+							<a
+							href="Mantenimiento.html"
+							target="FrameMain">
+								Mantenimiento
+							</a>
+
+				<ul>
+
+						<li class="folder" id="Trucosdeoptimizacion" data="">
+							<a
+							href="Trucosdeoptimizacion.html"
+							target="FrameMain">
+								Trucos de optimizaci&oacute;n
+							</a>
+
+				<ul>
+
+						<li class="" id="MantenimientoCorrectivo" data="">
+							<a
+							href="MantenimientoCorrectivo.html"
+							target="FrameMain">
+								Mantenimiento Correctivo
+							</a>
+
+				</li>
+
+						<li class="" id="MantenimientoPreventivo" data="">
+							<a
+							href="MantenimientoPreventivo.html"
+							target="FrameMain">
+								Mantenimiento Preventivo
+							</a>
+
+				</li>
+
+						<li class="" id="MantenimientoPerfectivo" data="">
+							<a
+							href="MantenimientoPerfectivo.html"
+							target="FrameMain">
+								Mantenimiento Perfectivo
+							</a>
+
+				</li></ul></li>
+
+						<li class="" id="GestiondeDatosduranteelMantenimi" data="">
+							<a
+							href="GestiondeDatosduranteelMantenimi.html"
+							target="FrameMain">
+								Gesti&oacute;n de Datos durante el Mantenimiento
+							</a>
+
+				</li>
+
+						<li class="" id="Copiasdeseguridadyrecuperacion" data="">
+							<a
+							href="Copiasdeseguridadyrecuperacion.html"
+							target="FrameMain">
+								Copias de seguridad y recuperaci&oacute;n
+							</a>
+
+				</li></ul></li>
+
+						<li class="folder" id="GLOSARIO" data="">
+							<a
+							href="GLOSARIO.html"
+							target="FrameMain">
+								GLOSARIO
+							</a>
+
+				<ul>
+
+						<li class="" id="Algoritmo" data="">
+							<a
+							href="Algoritmo.html"
+							target="FrameMain">
+								Algoritmo
+							</a>
+
+				</li>
+
+						<li class="" id="APIApplicationProgrammingInterfa" data="">
+							<a
+							href="APIApplicationProgrammingInterfa.html"
+							target="FrameMain">
+								API (Application Programming Interface)
+							</a>
+
+				</li>
+
+						<li class="" id="Autenticacion1" data="">
+							<a
+							href="Autenticacion1.html"
+							target="FrameMain">
+								Autenticaci&oacute;n
+							</a>
+
+				</li>
+
+						<li class="" id="BasedeDatos" data="">
+							<a
+							href="BasedeDatos.html"
+							target="FrameMain">
+								Base de Datos
+							</a>
+
+				</li>
+
+						<li class="" id="Backend" data="">
+							<a
+							href="Backend.html"
+							target="FrameMain">
+								Backend
+							</a>
+
+				</li>
+
+						<li class="" id="Bug" data="">
+							<a
+							href="Bug.html"
+							target="FrameMain">
+								Bug
+							</a>
+
+				</li>
+
+						<li class="" id="ComentariosSistema" data="">
+							<a
+							href="ComentariosSistema.html"
+							target="FrameMain">
+								Comentarios (Sistema)
+							</a>
+
+				</li>
+
+						<li class="" id="CSSCascadingStyleSheets" data="">
+							<a
+							href="CSSCascadingStyleSheets.html"
+							target="FrameMain">
+								CSS (Cascading Style Sheets)
+							</a>
+
+				</li>
+
+						<li class="" id="DesarrolloWeb" data="">
+							<a
+							href="DesarrolloWeb.html"
+							target="FrameMain">
+								Desarrollo Web
+							</a>
+
+				</li>
+
+						<li class="" id="Frontend" data="">
+							<a
+							href="Frontend.html"
+							target="FrameMain">
+								Frontend
+							</a>
+
+				</li>
+
+						<li class="" id="Framework" data="">
+							<a
+							href="Framework.html"
+							target="FrameMain">
+								Framework
+							</a>
+
+				</li>
+
+						<li class="" id="HTMLHyperTextMarkupLanguage" data="">
+							<a
+							href="HTMLHyperTextMarkupLanguage.html"
+							target="FrameMain">
+								HTML (HyperText Markup Language)
+							</a>
+
+				</li>
+
+						<li class="" id="InterfazdeUsuarioUI" data="">
+							<a
+							href="InterfazdeUsuarioUI.html"
+							target="FrameMain">
+								Interfaz de Usuario (UI)
+							</a>
+
+				</li>
+
+						<li class="" id="LikeMegusta" data="">
+							<a
+							href="LikeMegusta.html"
+							target="FrameMain">
+								Like (Me gusta)
+							</a>
+
+				</li>
+
+						<li class="" id="LocalStorage" data="">
+							<a
+							href="LocalStorage.html"
+							target="FrameMain">
+								LocalStorage
+							</a>
+
+				</li>
+
+						<li class="" id="Modal" data="">
+							<a
+							href="Modal.html"
+							target="FrameMain">
+								Modal
+							</a>
+
+				</li>
+
+						<li class="" id="NavegacionInterna" data="">
+							<a
+							href="NavegacionInterna.html"
+							target="FrameMain">
+								Navegaci&oacute;n Interna
+							</a>
+
+				</li>
+
+						<li class="" id="PerfildeUsuario" data="">
+							<a
+							href="PerfildeUsuario.html"
+							target="FrameMain">
+								Perfil de Usuario
+							</a>
+
+				</li>
+
+						<li class="" id="PersistenciadeDatos" data="">
+							<a
+							href="PersistenciadeDatos.html"
+							target="FrameMain">
+								Persistencia de Datos
+							</a>
+
+				</li>
+
+						<li class="" id="PublicacionObra" data="">
+							<a
+							href="PublicacionObra.html"
+							target="FrameMain">
+								Publicaci&oacute;n / Obra
+							</a>
+
+				</li>
+
+						<li class="" id="UsuarioActual" data="">
+							<a
+							href="UsuarioActual.html"
+							target="FrameMain">
+								Usuario Actual
+							</a>
+
+				</li></ul></li>
+				
+				</ul>
+		</div>
+		
+		
+		
+		<div id="tab-keywords">
+			<ul id="keywords">
+
+				
+				
+			</ul>
+		</div>
+		
+		
+		
+		<div id="tab-search">
+			<form onsubmit="PerformSearch(); return false;">
+				<label for="search_value">Search:</label>
+				<input id="search_value" name="search_value"></input>
+				<input type="submit" value="Search"/>
+			</form>
+			<div id="search_results"></div>
+		</div>
+		
+		
+		
+	</div>
+    
+</body>
+
+</html>
+

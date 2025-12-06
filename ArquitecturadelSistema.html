@@ -1,0 +1,105 @@
+﻿
+
+<html>
+	
+<head>
+	<title>Arquitectura del Sistema</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 10.1.0.147">
+	<meta name="description" content="" /> 
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "brushh.html?" + sTopicUrl;
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("ArquitecturadelSistema");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+</head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Arquitectura del Sistema</h1>
+				
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="ObjetivodelSistema.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				
+				
+				<a href="ArquitecturaGeneral.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p class="rvps4"><span class="rvts6">La arquitectura del sistema </span><span class="rvts11">BRUSH</span><span class="rvts6"> está diseñada bajo un enfoque </span><span class="rvts11">cliente-centrado</span><span class="rvts6">, lo que significa que toda la lógica del sistema se ejecuta directamente en el navegador del usuario. Debido a que la versión actual del proyecto no incluye un backend ni un servidor de base de datos, su estructura es ligera, portable y fácil de instalar en cualquier entorno local.</span></p>
+<p class="rvps4"><span class="rvts6">La arquitectura se divide en tres niveles principales: </span><span class="rvts11">capa de presentación</span><span class="rvts6">, </span><span class="rvts11">capa lógica</span><span class="rvts6"> y </span><span class="rvts11">capa de datos</span><span class="rvts6">, todas implementadas dentro del mismo archivo HTML mediante JavaScript.</span><span class="rvts6"></span></p>
+<p class="rvps5" style="clear: both;"><span class="rvts12">Creado con el Personal Edition de HelpNDoc: </span><a class="rvts13" href="https://www.helpndoc.com/es/descubrir-funciones/generacion-de-paginas-web-para-iphone/">Páginas web para iPhone fáciles de hacer</a></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;BRUSH&gt; by &lt;Equipo 4&gt;. All Rights Reserved.
+			</div>
+		</div>
+	
+	
+
+	
+</body>
+	
+</html>
+
